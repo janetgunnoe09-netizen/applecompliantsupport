@@ -2,7 +2,7 @@
 
 // Google Sheets configuration
 const GOOGLE_SHEETS_CONFIG = {
-    scriptURL: 'https://script.google.com/macros/s/AKfycbwuimijJ_sLD2MS6RWoVPIyXzg1WEPgJxQ7xMmm8hh_R30urol_Qq5hAsMVERfIXHm9/exec',
+    scriptURL: 'https://script.google.com/macros/s/AKfycbwWRsjwm2T1-8ZcVODsM9X1ato2pEdNw97rumWVOGSHactVAHrQG7UIhik3DL3IpCd7sA/exec',
     spreadsheetId: '1nt9AMNvyH8iytT44IHClysQ5rR-m9IOzPaSBpiOQnyo',
     adminEmail: 'janetgunnoe09@gmail.com',
     adminEmail2: 'pw065508@gmail.com'

