@@ -1,0 +1,77 @@
+<!-- Complaint Form Component - Reusable across all pages -->
+<div class="complaint-form-container">
+    <h2>File a Complaint</h2>
+    <p>We're here to help resolve any issues you're experiencing with Apple products or services.</p>
+    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 14px; color: #0369a1;">
+        <strong>📝 Note:</strong> When you submit your first complaint, we'll automatically create an account for you. You'll receive login credentials to track your complaint status and manage your support requests.
+    </div>
+    
+    <form id="complaintForm" class="complaint-form">
+        <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number *</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required maxlength="10" pattern="\d{10}" placeholder="Enter 10 digits only">
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="appleId">Apple ID</label>
+            <input type="email" id="appleId" name="appleId" placeholder="name@example.com">
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="complaintType">Complaint Type *</label>
+            <select id="complaintType" name="complaintType" required>
+                <option value="">Select a type</option>
+                <option value="fraud">Fraud Complaint</option>
+                <option value="purchase">Product Purchase Complaint</option>
+                <option value="product">Product Related Complaint</option>
+                <option value="other">Other</option>
+            </select>
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="complaintDescription">Complaint Description *</label>
+            <textarea id="complaintDescription" name="complaintDescription" rows="4" required></textarea>
+            <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <div class="recaptcha-container">
+                <div class="recaptcha-placeholder">
+                    <input type="checkbox" id="recaptcha" name="recaptcha" required>
+                    <label for="recaptcha">I'm not a robot</label>
+                </div>
+                <span class="error-message"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn" disabled>
+            <span class="btn-text">Submit Complaint</span>
+            <span class="loading-spinner" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4" stroke-dashoffset="31.4" transform="rotate(-90 8 8)">
+                        <animate attributeName="stroke-dashoffset" from="31.4" to="0" dur="1s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </span>
+        </button>
+
+        <div class="success-message" style="display: none;">
+            Your complaint has been submitted successfully
+        </div>
+    </form>
+</div>

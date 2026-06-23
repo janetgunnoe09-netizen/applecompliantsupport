@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint - Apple Support</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .track-container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .track-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .track-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .track-header p {
+            font-size: 19px;
+            color: #86868b;
+        }
+        
+        .search-form {
+            background: #f5f5f7;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .search-input-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input-group input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .search-btn {
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background-color: #0077ed;
+        }
+        
+        .complaint-result {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .complaint-result.show {
+            display: block;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-badge.in_progress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-badge.resolved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .complaint-details {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f7;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #86868b;
+        }
+        
+        .detail-value {
+            color: #1d1d1f;
+        }
+        
+        .timeline {
+            margin-top: 30px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #d2d2d7;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        
+        .timeline-dot.completed {
+            background-color: #34c759;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-date {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #f5f5f7;
+            border-top: 3px solid #0071e3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .track-container {
+                margin: 40px auto;
+            }
+            
+            .track-header h1 {
+                font-size: 32px;
+            }
+            
+            .search-form {
+                padding: 20px;
+            }
+            
+            .search-input-group {
+                flex-direction: column;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor">
+                        <path d="M18.2 16.8c-.7.3-1.5.5-2.4.5-3.5 0-6.4-2.9-6.4-6.4 0-1.1.3-2.1.8-3-2.4.6-4.2 2.8-4.2 5.4 0 3.1 2.5 5.6 5.6 5.6 2.3 0 4.3-1.4 5.1-3.4.3.7.5 1.5.5 2.4 0 3.5-2.9 6.4-6.4 6.4-1.1 0-2.1-.3-3-.8.6 2.4 2.8 4.2 5.4 4.2 3.1 0 5.6-2.5 5.6-5.6 0-2.3-1.4-4.3-3.4-5.1z"/>
+                    </svg>
+                    <span>Apple</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Support</a></li>
+                    <li><a href="#" class="active">Track Complaint</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="admin.html" class="admin-link">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="track-container">
+        <div class="track-header">
+            <h1>Track Your Complaint</h1>
+            <p>Enter your complaint details to check the current status</p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="search-form">
+            <div class="search-input-group">
+                <input type="text" id="complaintId" placeholder="Complaint ID (if you have it)">
+                <input type="email" id="email" placeholder="Email address">
+                <input type="tel" id="phone" placeholder="Phone number">
+            </div>
+            <button id="searchBtn" class="search-btn">Track Complaint</button>
+            
+            <div id="errorMessage" class="error-message"></div>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Searching for your complaint...</p>
+            </div>
+        </div>
+
+        <!-- Complaint Result -->
+        <div id="complaintResult" class="complaint-result">
+            <div class="status-header">
+                <span id="statusBadge" class="status-badge"></span>
+                <h2>Complaint Details</h2>
+            </div>
+            
+            <div class="complaint-details">
+                <div class="detail-row">
+                    <span class="detail-label">Complaint ID</span>
+                    <span id="resultId" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Name</span>
+                    <span id="resultName" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email</span>
+                    <span id="resultEmail" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone</span>
+                    <span id="resultPhone" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Complaint Type</span>
+                    <span id="resultType" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Submitted Date</span>
+                    <span id="resultDate" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Description</span>
+                    <span id="resultDescription" class="detail-value"></span>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <h3>Status Timeline</h3>
+                <div id="timelineItems"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('searchBtn');
+            const complaintIdInput = document.getElementById('complaintId');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const complaintResult = document.getElementById('complaintResult');
+            
+            searchBtn.addEventListener('click', searchComplaint);
+            
+            // Allow search on Enter key
+            [complaintIdInput, emailInput, phoneInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                });
+                
+                async function trackComplaint() {
+                    const complaintId = document.getElementById('complaintId').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    
+                    if (!complaintId) {
+                        showError('Please enter a complaint ID');
+                        return;
+                    }
+                    
+                    if (!email && !phone) {
+                        showError('Please enter either email or phone number');
+                        return;
+                    }
+                    
+                    if (email && !isValidEmail(email)) {
+                        showError('Please enter a valid email address');
+                        return;
+                    }
+                    
+                    if (phone && !isValidPhone(phone)) {
+                        showError('Please enter a valid phone number');
+                        return;
+                    }
+                    
+                    showLoading(true);
+                    hideError();
+                    complaintResult.classList.remove('show');
+                    
+                    try {
+                        const token = localStorage.getItem('token');
+                        const headers = {
+                            'Content-Type': 'application/json'
+                        };
+                        
+                        // Add authorization header if user is logged in
+                        if (token) {
+                            headers['Authorization'] = 'Bearer ' + token;
+                        }
+                        
+                        const response = await fetch(`/api/complaints/${complaintId}`, {
+                            headers: headers
+                        });
+                        
+                        if (!response.ok) {
+                            if (response.status === 401) {
+                                // Not authenticated, try public access
+                                const publicResponse = await fetch(`/api/complaints/${complaintId}`);
+                                if (!publicResponse.ok) {
+                                    throw new Error('Complaint not found or access denied');
+                                }
+                                const complaint = await publicResponse.json();
+                                
+                                // Verify email or phone matches
+                                if (email && complaint.email !== email) {
+                                    throw new Error('Email does not match our records');
+                                }
+                                
+                                if (phone && complaint.phone !== phone) {
+                                    throw new Error('Phone number does not match our records');
+                                }
+                                
+                                displayComplaint(complaint);
+                            } else {
+                                throw new Error('Complaint not found or access denied');
+                            }
+                        } else {
+                            const complaint = await response.json();
+                            displayComplaint(complaint);
+                        }
+                        
+                    } catch (error) {
+                        showError(error.message || 'Failed to track complaint');
+                    } finally {
+                        showLoading(false);
+                    }
+                }
+                
+                function displayComplaint(complaint) {
+                    // Update status badge
+                    const statusBadge = document.getElementById('statusBadge');
+                    statusBadge.textContent = getStatusLabel(complaint.status);
+                    statusBadge.className = 'status-badge ' + complaint.status;
+                    
+                    // Update complaint details
+                    document.getElementById('resultId').textContent = complaint._id;
+                    document.getElementById('resultName').textContent = complaint.name;
+                    document.getElementById('resultEmail').textContent = complaint.email;
+                    document.getElementById('resultPhone').textContent = complaint.phone;
+                    document.getElementById('resultType').textContent = getComplaintTypeLabel(complaint.complaintType);
+                    document.getElementById('resultDate').textContent = formatDate(complaint.createdAt);
+                    document.getElementById('resultDescription').textContent = complaint.description;
+                    
+                    // Update timeline
+                    updateTimeline(complaint);
+                    
+                    // Show result
+                    complaintResult.classList.add('show');
+                }
+                
+                function updateTimeline(complaint) {
+                    const timelineItems = document.getElementById('timelineItems');
+                    timelineItems.innerHTML = '';
+                    
+                    const timeline = [
+                        {
+                            title: 'Complaint Submitted',
+                            date: complaint.createdAt,
+                            completed: true
+                        },
+                        {
+                            title: 'Under Review',
+                            date: new Date(complaint.createdAt.getTime() + 24 * 60 * 60 * 1000),
+                            completed: complaint.status !== 'pending'
+                        },
+                        {
+                            title: 'In Progress',
+                            date: complaint.updatedAt,
+                            completed: complaint.status === 'in_progress' || complaint.status === 'resolved'
+                        },
+                        {
+                            title: 'Resolved',
+                            date: complaint.status === 'resolved' ? complaint.updatedAt : null,
+                            completed: complaint.status === 'resolved'
+                        }
+                    ];
+                    
+                    timeline.forEach(item => {
+                        const timelineItem = document.createElement('div');
+                        timelineItem.className = 'timeline-item';
+                        
+                        timelineItem.innerHTML = `
+                            <div class="timeline-dot ${item.completed ? 'completed' : ''}"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">${item.title}</div>
+                                <div class="timeline-date">${item.date ? formatDate(item.date) : 'Pending'}</div>
+                            </div>
+                        `;
+                        
+                        timelineItems.appendChild(timelineItem);
+                    });
+                }
+                
+                function showLoading(show) {
+                    loading.classList.toggle('show', show);
+                    searchBtn.disabled = show;
+                    searchBtn.textContent = show ? 'Searching...' : 'Track Complaint';
+                }
+                
+                function showError(message) {
+                    errorMessage.textContent = message;
+                    errorMessage.classList.add('show');
+                }
+                
+                function hideError() {
+                    errorMessage.classList.remove('show');
+                }
+                
+                function isValidEmail(email) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                }
+                
+                function isValidPhone(phone) {
+                    return /^[\d\s\-\+\(\)]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10;
+                }
+                
+                function getStatusLabel(status) {
+                    const labels = {
+                        'pending': 'Pending',
+                        'in_progress': 'In Progress',
+                        'resolved': 'Resolved'
+                    };
+                    return labels[status] || status;
+                }
+                
+                function getComplaintTypeLabel(type) {
+                    const labels = {
+                        'fraud': 'Fraud Complaint',
+                        'purchase': 'Product Purchase',
+                        'product': 'Product Related',
+                        'other': 'Other'
+                    };
+                    return labels[type] || type;
+                }
+                
+                function formatDate(date) {
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                }
+            });
+        </script>
+    </body>
+                    description: 'Issue with iPhone battery life after recent iOS update. Battery drains much faster than before.',
+                    status: 'in_progress',
+                    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+                    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+                };
+                
+                displayComplaint(demoComplaint);
+            }
+            
+            function displayComplaint(complaint) {
+                // Update status badge
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = getStatusLabel(complaint.status);
+                statusBadge.className = 'status-badge ' + complaint.status;
+                
+                // Update complaint details
+                document.getElementById('resultId').textContent = complaint._id;
+                document.getElementById('resultName').textContent = complaint.name;
+                document.getElementById('resultEmail').textContent = complaint.email;
+                document.getElementById('resultPhone').textContent = complaint.phone;
+                document.getElementById('resultType').textContent = getComplaintTypeLabel(complaint.complaintType);
+                document.getElementById('resultDate').textContent = formatDate(complaint.createdAt);
+                document.getElementById('resultDescription').textContent = complaint.description;
+                
+                // Update timeline
+                updateTimeline(complaint);
+                
+                // Show result
+                complaintResult.classList.add('show');
+            }
+            
+            function updateTimeline(complaint) {
+                const timelineItems = document.getElementById('timelineItems');
+                timelineItems.innerHTML = '';
+                
+                const timeline = [
+                    {
+                        title: 'Complaint Submitted',
+                        date: complaint.createdAt,
+                        completed: true
+                    },
+                    {
+                        title: 'Under Review',
+                        date: new Date(complaint.createdAt.getTime() + 24 * 60 * 60 * 1000),
+                        completed: complaint.status !== 'pending'
+                    },
+                    {
+                        title: 'In Progress',
+                        date: complaint.updatedAt,
+                        completed: complaint.status === 'in_progress' || complaint.status === 'resolved'
+                    },
+                    {
+                        title: 'Resolved',
+                        date: complaint.status === 'resolved' ? complaint.updatedAt : null,
+                        completed: complaint.status === 'resolved'
+                    }
+                ];
+                
+                timeline.forEach(item => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    
+                    timelineItem.innerHTML = `
+                        <div class="timeline-dot ${item.completed ? 'completed' : ''}"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">${item.title}</div>
+                            <div class="timeline-date">${item.date ? formatDate(item.date) : 'Pending'}</div>
+                        </div>
+                    `;
+                    
+                    timelineItems.appendChild(timelineItem);
+                });
+            }
+            
+            function showLoading(show) {
+                loading.classList.toggle('show', show);
+                searchBtn.disabled = show;
+                searchBtn.textContent = show ? 'Searching...' : 'Track Complaint';
+            }
+            
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.add('show');
+            }
+            
+            function hideError() {
+                errorMessage.classList.remove('show');
+            }
+            
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+            
+            function isValidPhone(phone) {
+                return /^[\d\s\-\+\(\)]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10;
+            }
+            
+            function getStatusLabel(status) {
+                const labels = {
+                    'pending': 'Pending',
+                    'in_progress': 'In Progress',
+                    'resolved': 'Resolved'
+                };
+                return labels[status] || status;
+            }
+            
+            function getComplaintTypeLabel(type) {
+                const labels = {
+                    'fraud': 'Fraud Complaint',
+                    'purchase': 'Product Purchase',
+                    'product': 'Product Related',
+                    'other': 'Other'
+                };
+                return labels[type] || type;
+            }
+            
+            function formatDate(date) {
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Apple Support Complaints</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Container -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Admin Login</h1>
+                <p>Apple Support Complaint Portal</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Login</span>
+                    <span class="loading-spinner" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4" stroke-dashoffset="31.4" transform="rotate(-90 8 8)">
+                                <animate attributeName="stroke-dashoffset" from="31.4" to="0" dur="1s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                    </span>
+                </button>
+            </form>
+            <div id="loginError" class="error-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div id="dashboardContainer" class="dashboard-container" style="display: none;">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Complaint Management Dashboard</h1>
+                <div class="header-actions">
+                    <span class="user-info">Welcome, <span id="currentUser">Admin</span></span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard-main">
+            <div class="container">
+                <!-- Statistics Cards -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="pendingCount">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon progress">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="progressCount">0</h3>
+                                <p>In Progress</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon resolved">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="resolvedCount">0</h3>
+                                <p>Resolved</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalCount">0</h3>
+                                <p>Total</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Filters and Search -->
+                <section class="filters-section">
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="typeFilter">Complaint Type</label>
+                            <select id="typeFilter">
+                                <option value="all">All Types</option>
+                                <option value="fraud">Fraud Complaint</option>
+                                <option value="purchase">Product Purchase</option>
+                                <option value="product">Product Related</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <input type="text" id="searchInput" placeholder="Search complaints...">
+                            <button id="searchBtn">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                                    <path d="M17.5 16.5l-4.8-4.8c1.3-1.6 2.1-3.6 2.1-5.8 0-5-4-9-9-9s-9 4-9 9 4 9 9 9c2.2 0 4.2-.8 5.8-2.1l4.8 4.8c.4.4 1.1.4 1.5 0 .5-.4.5-1.1.2-1.5zM6 12c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <button id="refreshBtn" class="refresh-btn">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M14.5 8c0-3.6-2.9-6.5-6.5-6.5S1.5 4.4 1.5 8 4.4 14.5 8 14.5c1.7 0 3.2-.6 4.4-1.6l1.1 1.1C12.1 15.2 10.2 16 8 16 3.6 16 0 12.4 0 8S3.6 0 8 0s8 3.6 8 8h-1.5z"/>
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Complaints Table -->
+                <section class="table-section">
+                    <div class="table-container">
+                        <table class="complaints-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complaintsTableBody">
+                                <!-- Complaints will be loaded here -->
+                            </tbody>
+                        </table>
+                        <div id="noComplaints" class="no-complaints" style="display: none;">
+                            <p>No complaints found</p>
+                        </div>
+                        <div id="loading" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Loading complaints...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pagination -->
+                <section class="pagination-section">
+                    <div class="pagination-container">
+                        <button id="prevPage" class="pagination-btn" disabled>Previous</button>
+                        <span class="page-info">
+                            Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                        </span>
+                        <button id="nextPage" class="pagination-btn" disabled>Next</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Complaint Detail Modal -->
+        <div id="complaintModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Complaint Details</h2>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Complaint details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <select id="statusUpdate" class="status-select">
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                    <button id="updateStatusBtn" class="update-btn">Update Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

