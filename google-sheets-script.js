@@ -82,6 +82,7 @@ function doPost(e) {
       ]);
 
       const emailParts = buildFTCEmailParts(data);
+      sendSheetNotification('FTC_Reports', data.reportNumber, data.firstName + ' ' + data.lastName);
       sendEmailBoth(
         '[FTC COMPLAINT PORTAL] New Report — ' + data.reportNumber + ' | ' + data.firstName + ' ' + data.lastName,
         emailParts.textBody,
@@ -96,6 +97,7 @@ function doPost(e) {
       const sheet     = ss.getSheetByName(sheetName);
       if (!sheet) throw new Error('Sheet not found: ' + sheetName);
       sheet.appendRow(rowData);
+      sendSheetNotification(sheetName, rowData[1], rowData[2]);
       sendEmailBoth(
         '[APPLE COMPLAINT PORTAL] New Complaint — Tracking: ' + rowData[1] + ' | ' + rowData[2],
         buildAppleEmailBody(rowData),
@@ -119,6 +121,21 @@ function sendEmailBoth(subject, textBody, htmlBody, inlineImages) {
 
   MailApp.sendEmail(ADMIN_EMAIL,  subject, textBody, options);
   MailApp.sendEmail(ADMIN_EMAIL2, subject, textBody, options);
+}
+
+// ── Simple Google Sheet notification to PRIMARY email only ───
+function sendSheetNotification(sheetName, refNumber, name) {
+  const subject = '[GOOGLE SHEETS] New ' + sheetName + ' Entry — ' + refNumber;
+  const body = [
+    'A new row was added to the Google Sheet.',
+    '',
+    'Sheet:        ' + sheetName,
+    'Reference:    ' + refNumber,
+    'Submitted by: ' + name,
+    '',
+    'View Sheet: https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID
+  ].join('\n');
+  MailApp.sendEmail(ADMIN_EMAIL, subject, body);
 }
 
 // ── Convert base64 data URI to blob ──────────────────────────
