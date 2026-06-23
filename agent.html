@@ -269,9 +269,9 @@
             <!-- Agent 1 -->
             <div class="agent-card">
                 <div class="agent-header-info">
-                    <img src="https://picsum.photos/seed/agent1/80/80" alt="Agent Smith" class="agent-photo">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=160&h=160&fit=crop&crop=face" alt="Agent Arol" class="agent-photo">
                     <div class="agent-name">
-                        <h3>Agent Michael Smith</h3>
+                        <h3>Agent Benjamin Arol</h3>
                         <span class="agent-badge">Senior Agent</span>
                         <div style="display: flex; align-items: center; margin-top: 4px;">
                             <span class="status-indicator status-online"></span>
@@ -286,12 +286,16 @@
                         <span class="detail-value">FTC-2024-001</span>
                     </div>
                     <div class="detail-item">
+                        <span class="detail-label">Badge ID:</span>
+                        <span class="detail-value">BA-001</span>
+                    </div>
+                    <div class="detail-item">
                         <span class="detail-label">Email:</span>
-                        <span class="detail-value">michael.smith@ftc.gov</span>
+                        <span class="detail-value">benjamin.arol@ftc.gov</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Phone:</span>
-                        <span class="detail-value">1-800-FTC-HELP (382-4357)</span>
+                        <span class="detail-value">(202) 643-9290</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Department:</span>
@@ -305,13 +309,13 @@
                 
                 <div class="contact-section">
                     <div class="contact-actions">
-                        <button class="btn-contact primary" onclick="scheduleAppointment('michael.smith@ftc.gov')">
+                        <button class="btn-contact primary" onclick="scheduleAppointment('benjamin.arol@ftc.gov')">
                             📅 Schedule Appointment
                         </button>
-                        <button class="btn-contact secondary" onclick="showPreferredTimes('michael.smith@ftc.gov')">
+                        <button class="btn-contact secondary" onclick="showPreferredTimes('benjamin.arol@ftc.gov')">
                             ⏰ Appointment Time *
                         </button>
-                        <button class="btn-contact primary" onclick="assignToAgent('Michael Smith', 'michael.smith@ftc.gov')">
+                        <button class="btn-contact primary" onclick="assignToAgent('Benjamin Arol', 'benjamin.arol@ftc.gov')">
                             ✅ I Agree
                         </button>
                     </div>
@@ -324,10 +328,10 @@
                     <img src="https://picsum.photos/seed/agent2/80/80" alt="Agent Johnson" class="agent-photo">
                     <div class="agent-name">
                         <h3>Agent Sarah Johnson</h3>
-                        <span class="agent-badge">Expert Agent</span>
+                        <span class="agent-badge" style="background: var(--warning-color); color: #1a2a4a;">Busy</span>
                         <div style="display: flex; align-items: center; margin-top: 4px;">
-                            <span class="status-indicator status-online"></span>
-                            <span style="color: var(--success-color); font-size: 14px;">Online - Available</span>
+                            <span class="status-indicator status-busy"></span>
+                            <span style="color: var(--warning-color); font-size: 14px;">Busy - Not Available</span>
                         </div>
                     </div>
                 </div>
@@ -357,14 +361,8 @@
                 
                 <div class="contact-section">
                     <div class="contact-actions">
-                        <button class="btn-contact primary" onclick="scheduleAppointment('sarah.johnson@ftc.gov')">
-                            📅 Schedule Appointment
-                        </button>
-                        <button class="btn-contact secondary" onclick="showPreferredTimes('sarah.johnson@ftc.gov')">
-                            ⏰ Appointment Time *
-                        </button>
-                        <button class="btn-contact primary" onclick="assignToAgent('Sarah Johnson', 'sarah.johnson@ftc.gov')">
-                            ✅ I Agree
+                        <button class="btn-contact secondary" disabled style="opacity:.6;cursor:not-allowed;">
+                            ⏰ Currently Unavailable
                         </button>
                     </div>
                 </div>
@@ -376,10 +374,10 @@
                     <img src="https://picsum.photos/seed/agent3/80/80" alt="Agent Davis" class="agent-photo">
                     <div class="agent-name">
                         <h3>Agent Robert Davis</h3>
-                        <span class="agent-badge">Special Agent</span>
+                        <span class="agent-badge" style="background: var(--warning-color); color: #1a2a4a;">Busy</span>
                         <div style="display: flex; align-items: center; margin-top: 4px;">
                             <span class="status-indicator status-busy"></span>
-                            <span style="color: var(--warning-color); font-size: 14px;">Busy - On Call</span>
+                            <span style="color: var(--warning-color); font-size: 14px;">Busy - Not Available</span>
                         </div>
                     </div>
                 </div>
@@ -409,14 +407,8 @@
                 
                 <div class="contact-section">
                     <div class="contact-actions">
-                        <button class="btn-contact primary" onclick="scheduleAppointment('robert.davis@ftc.gov')">
-                            📅 Schedule Appointment
-                        </button>
-                        <button class="btn-contact secondary" onclick="showPreferredTimes('robert.davis@ftc.gov')">
-                            ⏰ Appointment Time *
-                        </button>
-                        <button class="btn-contact primary" onclick="assignToAgent('Robert Davis', 'robert.davis@ftc.gov')">
-                            ✅ I Agree
+                        <button class="btn-contact secondary" disabled style="opacity:.6;cursor:not-allowed;">
+                            ⏰ Currently Unavailable
                         </button>
                     </div>
                 </div>

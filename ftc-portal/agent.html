@@ -104,25 +104,26 @@
         <!-- Agent 1 -->
         <div class="agent-card">
             <div class="agent-top">
-                <img src="https://picsum.photos/seed/agent1/80/80" alt="Agent Smith" class="agent-photo">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=160&h=160&fit=crop&crop=face" alt="Agent Arol" class="agent-photo">
                 <div class="agent-name">
                     <div class="agent-badge">Senior Agent</div>
-                    <h3>Michael Smith</h3>
+                    <h3>Benjamin Arol</h3>
                     <div class="agent-status"><div class="dot dot-green"></div><span style="color:#28a745;font-weight:600;">Online &mdash; Available</span></div>
                 </div>
             </div>
             <div class="agent-details">
                 <div><div class="detail-label">Agent ID</div><div class="detail-value">FTC-2024-001</div></div>
+                <div><div class="detail-label">Badge ID</div><div class="detail-value">BA-001</div></div>
                 <div><div class="detail-label">Experience</div><div class="detail-value">12 years</div></div>
-                <div><div class="detail-label">Email</div><div class="detail-value" style="word-break:break-all;">michael.smith@ftc.gov</div></div>
+                <div><div class="detail-label">Email</div><div class="detail-value" style="word-break:break-all;">benjamin.arol@ftc.gov</div></div>
                 <div><div class="detail-label">Department</div><div class="detail-value">Fraud Investigation</div></div>
-                <div><div class="detail-label">Phone</div><div class="detail-value">1-800-382-4357</div></div>
+                <div><div class="detail-label">Phone</div><div class="detail-value">(202) 643-9290</div></div>
                 <div><div class="detail-label">Cases Resolved</div><div class="detail-value">1,240+</div></div>
             </div>
             <div class="agent-actions">
-                <button class="btn-agent-secondary" onclick="openTimeModal('Michael Smith','michael.smith@ftc.gov')">&#9200; Select Appointment Time</button>
-                <button class="btn-agent-primary" onclick="scheduleAppointment('Michael Smith','michael.smith@ftc.gov')">&#128197; Schedule Appointment</button>
-                <button class="btn-agent-agree" onclick="agreeAndAssign('Michael Smith','michael.smith@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+                <button class="btn-agent-secondary" onclick="openTimeModal('Benjamin Arol','benjamin.arol@ftc.gov')">&#9200; Select Appointment Time</button>
+                <button class="btn-agent-primary" onclick="scheduleAppointment('Benjamin Arol','benjamin.arol@ftc.gov')">&#128197; Schedule Appointment</button>
+                <button class="btn-agent-agree" onclick="agreeAndAssign('Benjamin Arol','benjamin.arol@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
             </div>
         </div>
 
@@ -131,9 +132,9 @@
             <div class="agent-top">
                 <img src="https://picsum.photos/seed/agent2/80/80" alt="Agent Johnson" class="agent-photo">
                 <div class="agent-name">
-                    <div class="agent-badge">Expert Agent</div>
+                    <div class="agent-badge busy">Busy</div>
                     <h3>Sarah Johnson</h3>
-                    <div class="agent-status"><div class="dot dot-green"></div><span style="color:#28a745;font-weight:600;">Online &mdash; Available</span></div>
+                    <div class="agent-status"><div class="dot dot-yellow"></div><span style="color:#856404;font-weight:600;">Busy &mdash; Not Available</span></div>
                 </div>
             </div>
             <div class="agent-details">
@@ -145,9 +146,7 @@
                 <div><div class="detail-label">Cases Resolved</div><div class="detail-value">890+</div></div>
             </div>
             <div class="agent-actions">
-                <button class="btn-agent-secondary" onclick="openTimeModal('Sarah Johnson','sarah.johnson@ftc.gov')">&#9200; Select Appointment Time</button>
-                <button class="btn-agent-primary" onclick="scheduleAppointment('Sarah Johnson','sarah.johnson@ftc.gov')">&#128197; Schedule Appointment</button>
-                <button class="btn-agent-agree" onclick="agreeAndAssign('Sarah Johnson','sarah.johnson@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+                <button class="btn-agent-secondary" disabled style="opacity:.6;cursor:not-allowed;">&#9200; Currently Unavailable</button>
             </div>
         </div>
 
@@ -158,7 +157,7 @@
                 <div class="agent-name">
                     <div class="agent-badge busy">Busy</div>
                     <h3>Robert Davis</h3>
-                    <div class="agent-status"><div class="dot dot-yellow"></div><span style="color:#856404;font-weight:600;">Busy &mdash; On Call</span></div>
+                    <div class="agent-status"><div class="dot dot-yellow"></div><span style="color:#856404;font-weight:600;">Busy &mdash; Not Available</span></div>
                 </div>
             </div>
             <div class="agent-details">
@@ -170,9 +169,7 @@
                 <div><div class="detail-label">Cases Resolved</div><div class="detail-value">2,100+</div></div>
             </div>
             <div class="agent-actions">
-                <button class="btn-agent-secondary" onclick="openTimeModal('Robert Davis','robert.davis@ftc.gov')">&#9200; Select Appointment Time</button>
-                <button class="btn-agent-primary" onclick="scheduleAppointment('Robert Davis','robert.davis@ftc.gov')">&#128197; Schedule Appointment</button>
-                <button class="btn-agent-agree" onclick="agreeAndAssign('Robert Davis','robert.davis@ftc.gov')">&#10003; I Agree &mdash; Assign This Agent</button>
+                <button class="btn-agent-secondary" disabled style="opacity:.6;cursor:not-allowed;">&#9200; Currently Unavailable</button>
             </div>
         </div>
 
@@ -304,7 +301,7 @@
             '<strong>Email:</strong> ' + email + '<br>' +
             '<strong>Appointment:</strong> ' + selectedDate + ' at ' + selectedTime + '<br>' +
             '<strong>Report #:</strong> ' + reportNum + '<br>' +
-            '<strong>Phone:</strong> 1-800-382-4357';
+            '<strong>Phone:</strong> (202) 643-9290';
 
         document.getElementById('assignModal').style.display = 'flex';
     }
